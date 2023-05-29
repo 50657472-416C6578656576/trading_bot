@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "trading-bot"
+version = "0.1.0"
+description = "Бот для гребения денег лопатой с помощью трейдинга"
+authors = ["Николай Суворов", "Алексеев Петр <ya@petr-alexeev.ru>"]
+readme = "README.md"
+packages = [{include = "trading_bot"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^2.0.2"
+telebot = "^0.0.5"
+python-dotenv = "^1.0.0"
+python-binance = "^1.0.17"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
