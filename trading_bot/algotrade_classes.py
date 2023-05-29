@@ -139,3 +139,7 @@ class Trader:
 
             except Exception as ex:
                 logging.warning(f'Caught exception: {ex}')
+                bot.send_message(
+                    chat_id=Config.telegram_chat_id,
+                    text=f'Caught exception: {ex}',
+                )
