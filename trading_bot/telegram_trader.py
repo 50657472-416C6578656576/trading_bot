@@ -1,10 +1,8 @@
-import telebot
 from telebot import types
 from algotrade_classes import Trader
 
-from config import Config
-
-bot = telebot.TeleBot(Config.BOT_TOKEN)
+from .config import Config
+from .bot import bot
 
 
 @bot.message_handler(commands=["start"])

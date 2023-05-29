@@ -1,6 +1,6 @@
 import logging
 
-from .telegrambot import bot
+from .telegram_trader import bot
 from .config import Config
 
 logger = logging.getLogger(__name__)

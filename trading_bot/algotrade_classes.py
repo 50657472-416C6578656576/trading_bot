@@ -5,7 +5,7 @@ import logging
 import subprocess
 from binance.client import Client
 
-from .telegrambot import bot
+from .telegram_trader import bot
 from .config import Config
 
 
