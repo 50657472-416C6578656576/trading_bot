@@ -48,6 +48,15 @@ class Strategy:
         self.data.loc[macdhist > 0, 'signal'] = 1
         self.data.loc[macdhist < 0, 'signal'] = -1
         return self.data['signal']
+    
+    def ema_rsi(self, period):
+        " Exponential Moving Average and Relative Strength Index strategy "
+        ema = talib.EMA(self.data['close'], timeperiod=period)
+        rsi = talib.RSI(self.data['close'], timeperiod=period)
+        self.data['signal'] = 0
+        self.data.loc[ema > rsi, 'signal'] = 1
+        self.data.loc[ema < rsi, 'signal'] = -1
+        return self.data['signal']
 
 class Trader:
     def __init__(self, API_KEY, SECRET_KEY, strategy, symbol, timeframe):
