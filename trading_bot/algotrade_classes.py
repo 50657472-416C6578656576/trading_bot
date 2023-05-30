@@ -149,6 +149,13 @@ class Trader:
         for balance in account['balances']:
             if balance['asset'] == self.symbol.split('USDT')[0]:
                 return float(balance['free'])
+            
+    def get_logs(self):
+        return self.client.get_logs()
+    
+    def stop_trading(self):
+        self.client.cancel_all_orders()
+        self.logger.info('Trading stopped')
 
     def start_trading(self, predicate : bool = True):
         while (predicate): # predicate such as True. Example: if balance < 1000 USBT 
