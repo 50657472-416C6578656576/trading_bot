@@ -150,8 +150,8 @@ class Trader:
             if balance['asset'] == self.symbol.split('USDT')[0]:
                 return float(balance['free'])
 
-    def start_trading(self):
-        while True:
+    def start_trading(self, predicate : bool = True):
+        while (predicate): # predicate such as True. Example: if balance < 1000 USBT 
             try:
                 # Get historical klines data
                 klines = self.client.get_historical_klines(self.symbol, self.timeframe, "1000 minutes ago UTC")
