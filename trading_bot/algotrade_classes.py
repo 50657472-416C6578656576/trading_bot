@@ -173,6 +173,24 @@ class Trader:
                     signal = Strategy(data).rsi(period=14)
                 elif self.strategy == 'boll':
                     signal = Strategy(data).boll(period=20)
+                elif self.strategy == 'rsi_or_boll':
+                    signal = Strategy(data).rsi_or_boll(period=14)
+                elif self.strategy == 'macd':
+                    signal = Strategy(data).macd(period=20)
+                elif self.strategy == 'macd_boll':
+                    signal = Strategy(data).macd_boll(period=20, width=20)
+                elif self.strategy == 'ema_boll':
+                    signal = Strategy(data).ema_boll(period=20, width=20)
+                elif self.strategy == 'sma_boll':
+                    signal = Strategy(data).sma_boll(period=20, width=20)
+                elif self.strategy == 'rsi_ema_boll':
+                    signal = Strategy(data).rsi_ema_boll(period=14, ema_period=20, boll_period=20)
+                elif self.strategy == 'sma':
+                    signal = Strategy(data).sma(period=20)
+                elif self.strategy == 'rsi_or_sma':
+                    signal = Strategy(data).rsi_or_sma(period=14)
+                elif self.strategy == 'boll_or_sma':
+                    signal = Strategy(data).boll_or_sma(period=20)
                 else:
                     raise ValueError('Invalid strategy!')
 
