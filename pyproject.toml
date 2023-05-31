@@ -13,6 +13,7 @@ telebot = "^0.0.5"
 python-dotenv = "^1.0.0"
 python-binance = "^1.0.17"
 ta-lib = "^0.4.26"
+flask = "^2.3.2"
 
 
 [build-system]
