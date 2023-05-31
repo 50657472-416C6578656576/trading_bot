@@ -518,6 +518,7 @@ files = [
 
 [package.dependencies]
 numpy = [
+    {version = ">=1.20.3", markers = "python_version < \"3.10\""},
     {version = ">=1.21.0", markers = "python_version >= \"3.10\""},
     {version = ">=1.23.2", markers = "python_version >= \"3.11\""},
 ]
@@ -801,6 +802,19 @@ files = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
 ]
+
+[[package]]
+name = "ta-lib"
+version = "0.4.26"
+description = "Python wrapper for TA-Lib"
+optional = false
+python-versions = "*"
+files = [
+    {file = "TA-Lib-0.4.26.tar.gz", hash = "sha256:9a1e87ead8990f5c344184e17f268b4f6f50532ea9d40fb7fd161ce5197716da"},
+]
+
+[package.dependencies]
+numpy = "*"
 
 [[package]]
 name = "telebot"
@@ -1104,5 +1118,5 @@ multidict = ">=4.0"
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.11"
-content-hash = "c63beaba159bdf20e89b357042ef350ed62c059e45a0c86baebc439a72440271"
+python-versions = "^3.9"
+content-hash = "c27b91240dda6cd3769318aa37bb63a01dd9719c7776835756d41e51a454c4fb"
