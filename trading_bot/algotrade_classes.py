@@ -5,8 +5,8 @@ import logging
 import subprocess
 from binance.client import Client
 
-from .bot import bot
-from .config import Config
+from bot import bot
+from config import Config
 
 
 class Strategy:

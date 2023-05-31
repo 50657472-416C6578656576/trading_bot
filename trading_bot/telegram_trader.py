@@ -1,8 +1,8 @@
 from telebot import types
 from algotrade_classes import Trader
 
-from .config import Config
-from .bot import bot
+from config import Config
+from bot import bot
 
 
 @bot.message_handler(commands=["start"])

@@ -1,7 +1,7 @@
 import logging
 
-from .telegram_trader import bot
-from .config import Config
+from telegram_trader import bot
+from config import Config
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
