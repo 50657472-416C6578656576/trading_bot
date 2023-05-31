@@ -2,10 +2,8 @@ import pandas as pd
 import talib
 import time
 import logging
-import subprocess
 from binance.client import Client
 
-from bot import bot
 from config import Config
 
 
@@ -118,7 +116,7 @@ class Strategy:
         self.data.loc[(self.data['close'] < ema) & (self.data['close'] < lowerband) & (rsi > 70), 'signal'] = -1
         return self.data['signal']
     
-    def macd_boll(self, period, width = 20):
+    def macd_boll(self, period = 20, width = 20):
         """ Moving Average Convergence Divergence and Bollinger Bands strategy """
         macd, macdsignal, macdhist = talib.MACD(self.data['close'], fastperiod=12, slowperiod=26, signalperiod=9)
         upperband, middleband, lowerband = talib.BBANDS(self.data['close'], timeperiod=period, matype=talib.MA_Type.SMA, nbdev=width)
@@ -153,6 +151,12 @@ class Trader:
     def get_logs(self):
         return self.client.get_logs()
     
+    def get_open_orders(self):
+        return self.client.get_open_orders()
+    
+    def get_closed_orders(self):
+        return self.client.get_closed_orders()
+
     def stop_trading(self):
         self.client.cancel_all_orders()
         self.logger.info('Trading stopped')
@@ -214,10 +218,6 @@ class Trader:
                         self.last_balance = self.balance
                         self.balance -= balance
                         self.logger.info(f'Buy {balance} {self.symbol} at {order.get("price")}')
-                        bot.send_message(
-                            chat_id=Config.telegram_chat_id,
-                            text=f'Buy {balance} {self.symbol} at {order.get("price")}',
-                        )
 
                 elif signal.iloc[-1] == -1:     # Sell
                     if self.balance > 0:
@@ -230,20 +230,10 @@ class Trader:
                         self.last_balance = self.balance
                         self.balance = 0
                         self.logger.info(f'Sell {self.last_balance} {self.symbol} at {order.get("price")}')
-                        bot.send_message(
-                            chat_id=Config.TELEGRAM_CHAT_ID,
-                            text=f'Sell {self.last_balance} {self.symbol} at {order.get("price")}',
-                        )
 
                 # Print current balance
                 self.logger.debug(f'Current balance of {self.symbol}: {self.balance}')
-                # Get transaction status
-                subprocess.run(['python', 'transaction_status.py'])
                 time.sleep(30)  # Wait 30 seconds before checking again
 
             except Exception as ex:
                 logging.warning(f'Caught exception: {ex}')
-                bot.send_message(
-                    chat_id=Config.telegram_chat_id,
-                    text=f'Caught exception: {ex}',
-                )
