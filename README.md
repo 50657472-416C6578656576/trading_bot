@@ -21,6 +21,16 @@
 
 
 ## Уставновка и запуск
+### Основной флоу
 1. Установка зависимостей производится командой в директории проекта: `$ poetry install`
 2. Создайте файл `.env` и запишите туда необходимые данные для запуска бота и клиента бинанс (их список можно найти в [config.py](trading_bot/config.py))
-3. Запуск бота: `$ python3 trading_bot/telegram_trader.py`
+3. Запуск бота: 
+    ```bash
+    $ python3 trading_bot/telegram_trader.py
+    ```
+### Установка ta-lib (если возникают проблемы)
+1. Перейти в директорию [ta-lib](./ta-lib)
+2. Выполнить следующие действия:
+    ```bash
+    $ ./configure && make && sudo make install && pip install ta-lib
+    ```
