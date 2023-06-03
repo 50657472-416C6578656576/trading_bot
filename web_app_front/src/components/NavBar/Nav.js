@@ -22,7 +22,7 @@ const Nav = () => {
                 <ul className='nav-links mobile-nav-links'>
                     <li><Link to='/control'>bot control</Link></li>
                     <li><Link to='/profile'>your account</Link></li>
-                    <li><a href={GIT_HUB_LINK}>github repository</a></li>
+                    <li><a href={GIT_HUB_LINK} target="_blank">github repository</a></li>
                 </ul>
             </nav>
         </div>
