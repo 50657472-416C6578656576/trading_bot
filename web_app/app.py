@@ -2,14 +2,13 @@ import json
 
 from flask import Flask, request, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
-from threading import Thread
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
 from flask_session import Session
 
-from web_app.config import ApplicationConfig
-from web_app.db import db, User
 from trading_bot import Trader
+from web_app.config import ApplicationConfig
+from web_app.db import db, User, TASKS, TraderTask
 
 
 app = Flask(__name__)
@@ -101,10 +100,37 @@ def start_trading():
     user = User.query.filter_by(id=user_id).first()
     api_key, secret = user.api_key, user.secret
     strategy, symbol, timeframe = data['strategy'], data['symbol'], data['timeframe']
-    trader = Trader(api_key, secret, strategy, symbol, timeframe)
-    thread = Thread(target=trader.start_trading)
-    thread.daemon = True
-    thread.start()
-    return json.dumps({
-        'thread': f'{thread.getName()}',
+    task = TraderTask(api_key, secret, strategy, symbol, timeframe)
+    task.run()
+    return jsonify({
+        'thread': f'{task.thread.name}',
     })
+
+
+@app.route('/stop_trading', methods=['POST'])
+def stop_trading():
+    user_id = session.get("user_id")
+    if user_id is None:
+        return jsonify({"error": "Unauthorized"}), 401
+    if (task := TASKS.get(user_id)) and task.is_running:
+        task.stop()
+        assert not task.is_running, 'Task was not stopped'
+        return jsonify({'status': 'stopped'})
+    return jsonify({'status': 'no running tasks'}), 404
+
+
+@app.route('/balance', methods=['GET'])
+def balance():
+    user_id = session.get("user_id")
+    if user_id is None:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    if task := TASKS.get(user_id):
+        balance = task.trader.get_balance()
+        return jsonify({'balance': f'{balance}'})
+
+    user = User.query.filter_by(id=user_id).first()
+    api_key, secret = user.api_key, user.secret
+    symbol = request.args.get('symbol')
+    balance = Trader(api_key, secret, None, symbol, None).get_balance()
+    return jsonify({'balance': f'{balance}'})
