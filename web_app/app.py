@@ -98,7 +98,7 @@ def start_trading():
         return jsonify({"error": "Unauthorized"}), 401
 
     data = request.get_json(force=True)
-    user = User.query.filter_by(user_id=user_id).first()
+    user = User.query.filter_by(id=user_id).first()
     api_key, secret = user.api_key, user.secret
     strategy, symbol, timeframe = data['strategy'], data['symbol'], data['timeframe']
     trader = Trader(api_key, secret, strategy, symbol, timeframe)

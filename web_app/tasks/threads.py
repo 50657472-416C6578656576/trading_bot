@@ -12,8 +12,8 @@ class TaskThread(threading.Thread):
     def run(self, *args, **kwargs):
         threading.Thread.start(self)
 
-    def stop(self):
-        threading.
+    # def stop(self):
+    #     threading.
 
     def get_id(self) -> str:
         return self.id
