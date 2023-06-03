@@ -1,23 +1,17 @@
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import os
-from flask_wtf.csrf import CSRFProtect
-app = Flask(__name__,  template_folder='../templates')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-db = SQLAlchemy(app)
+from uuid import uuid4
 
-SECRET_KEY = os.urandom(32)
-app.config['SECRET_KEY'] = SECRET_KEY
-csrf = CSRFProtect(app)
+db = SQLAlchemy()
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer,
-               primary_key = True)
-    username = db.Column(db.String(20),
-                         unique = True, 
-                         nullable = False)
-    email = db.Column(db.String(120), 
-                      unique = True, 
-                      nullable = False,)
-    password = db.Column(db.String(60), 
-                         nullable = False)
+
+def get_uuid():
+    return uuid4().hex
+
+
+class User(db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid)
+    email = db.Column(db.String(345), unique=True)
+    password = db.Column(db.Text, nullable=False)
+    api_key = db.Column(db.Text, nullable=False)
+    secret = db.Column(db.Text, nullable=False)
