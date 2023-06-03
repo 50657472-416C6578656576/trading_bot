@@ -3,6 +3,7 @@ import {Route, Routes} from "react-router-dom";
 import Home from "./components/Home/Home";
 import Control from "./components/Control/Control";
 import Profile from "./components/Profile/Profile";
+import Settings from "./components/Settings/Settings";
 
 
 const Router = () => {
@@ -11,6 +12,7 @@ const Router = () => {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/control" element={<Control/>}/>
                 <Route path="/profile" element={<Profile/>}/>
+                <Route path="/settings" element={<Settings/>}/>
             </Routes>
     );
 };

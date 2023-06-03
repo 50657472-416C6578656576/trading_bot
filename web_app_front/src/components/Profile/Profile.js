@@ -1,5 +1,6 @@
 import './Profile.sass';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {Navigate} from 'react-router-dom';
 import httpClient from "../../httpClient";
 
 const Profile = () => {
@@ -37,7 +38,11 @@ const Profile = () => {
             alert("Invalid credentials");
         }
     };
-    window.addEventListener("DOMContentLoaded", (event) => {
+    useEffect(() => {
+        try {
+            const resp = httpClient.get("/profile");
+        } catch (error) {}
+
         const signUpButton = document.getElementById('signUp');
         const signInButton = document.getElementById('signIn');
         const container = document.getElementById('container');
@@ -48,7 +53,7 @@ const Profile = () => {
         signInButton.addEventListener('click', () => {
             container.classList.remove("right-panel-active");
         });
-    });
+    }, []);
 
     return (
         <div className="container-form-wrapper">

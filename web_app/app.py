@@ -1,9 +1,6 @@
-import json
-
 from flask import Flask, request, jsonify, session
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from flask_session import Session
 
 from trading_bot import Trader
@@ -120,7 +117,7 @@ def stop_trading():
 
 
 @app.route('/balance', methods=['GET'])
-def balance():
+def get_balance():
     user_id = session.get("user_id")
     if user_id is None:
         return jsonify({"error": "Unauthorized"}), 401
