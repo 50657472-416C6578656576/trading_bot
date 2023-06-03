@@ -1,0 +1,61 @@
+.curtain-container {
+  height: 100vh;
+  width: 100%;
+  background-color: #CB4038;
+  position: relative;
+  z-index: 3;
+}
+.curtain-container h1 {
+  font-family: "Pacifico", cursive;
+  color: #FDF8E0;
+  font-size: 10rem;
+}
+
+.random-container {
+  display: inline-block;
+  position: fixed;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.svg-wrapper {
+  margin-top: 5%;
+}
+.svg-wrapper h2 {
+  font-size: 5rem;
+  color: #FDF8E0;
+  margin-top: 5%;
+}
+
+@keyframes changebg {
+  99% {
+    opacity: 0%;
+    z-index: 1;
+  }
+  100% {
+    opacity: 0%;
+    z-index: -4;
+  }
+}
+.active {
+  animation-timing-function: linear;
+  animation: changebg 2s forwards;
+}
+
+@media (max-width: 1560px) {
+  .svg-wrapper img {
+    height: 300px;
+  }
+
+  .curtain-container h1 {
+    font-size: 8rem;
+  }
+
+  .svg-wrapper h2 {
+    font-size: 3rem !important;
+  }
+}
+
+/*# sourceMappingURL=MainPageIllustration.css.map */

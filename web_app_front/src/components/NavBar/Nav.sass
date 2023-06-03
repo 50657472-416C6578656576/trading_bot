@@ -1,0 +1,96 @@
+@import '../../core/theme/vars'
+
+@mixin mobile-nav-bar()
+	.mobile-nav-bar
+		display: none
+		height: 100vh
+		width: 100vw
+		top: 0
+		left: 0
+		border-radius: 0
+		transform: translateX(0%)
+
+		.mobile-nav-links
+			flex-direction: column
+
+	.menu-btn
+		display: block
+
+
+.menu-btn
+	display: none
+	position: fixed
+	top: 1%
+	right: 1%
+	transform: translate(-50%, 50%)
+	z-index: 5
+
+	.btn-burger
+		height: 8vh
+		width: 8vh
+		border-radius: 1.5vh
+		background-color: $accent-color
+		padding-top: 0.5vh
+
+		.burger-row
+			background-color: $background-color
+			margin-top: 1vh
+			margin-left: auto
+			margin-right: auto
+			height: 1vh
+			width: 6vh
+			border-radius: 5vh
+
+.logo
+	z-index: 2
+	position: fixed
+	top: 1%
+	left: 23%
+	align-items: center
+	display: inline-block
+
+.nav-bar
+	z-index: 4
+	position: fixed
+	top: 0px
+	background-color: $accent-color
+	width: 50%
+	height: 70px
+	top: 2%
+	left: 50%
+	transform: translateX(-45%)
+	border-radius: 15px
+
+	.nav-links
+		display: flex
+		flex-direction: row
+		height: 100%
+		justify-content: center
+		grid-gap: 10%
+		align-items: center
+		list-style: none
+
+		a
+			text-decoration: none
+			color: $background-color
+			font: 3.3rem 'El Messiri'
+
+
+//		MEDIA
+
+@media (max-width: 1560px)
+	.nav-links
+		a
+			font-size: 2.4rem !important
+	.logo
+		left: 21%
+
+		img
+			height: 70px
+
+@media (max-width: 1080px)
+	@include mobile-nav-bar
+
+@media (orientation: portrait)
+	@include mobile-nav-bar
+

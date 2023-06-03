@@ -1,0 +1,52 @@
+@import '../../../core/theme/vars'
+
+.curtain-container
+	height: 100vh
+	width: 100%
+	background-color: $accent-color
+	position: relative
+	z-index: 3
+
+	h1
+		font-family: 'Pacifico', cursive
+		color: $background-color
+		font-size: 10rem
+
+.random-container
+	display: inline-block
+	position: fixed
+	left: 50%
+	top: 55%
+	transform: translate(-50%, -50%)
+	text-align: center
+
+.svg-wrapper
+	margin-top: 5%
+
+	h2
+		font-size: 5rem
+		color: $background-color
+		margin-top: 5%
+
+@keyframes changebg
+	99%
+		opacity: 0%
+		z-index: 1
+	100%
+		opacity: 0%
+		z-index: -4
+
+.active
+	animation-timing-function: linear
+	animation: changebg 2s forwards
+
+@media (max-width: 1560px)
+	.svg-wrapper
+		img
+			height: 300px
+	.curtain-container
+		h1
+			font-size: 8rem
+	.svg-wrapper
+		h2
+			font-size: 3rem !important

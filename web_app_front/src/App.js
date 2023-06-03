@@ -1,41 +1,14 @@
-import { useState, useEffect } from 'react'
-import axios from "axios";
-import './App.css';
+import Router from "./router";
+import Nav from "./components/NavBar/Nav";
 
-function App() {
 
-  const [Data, setData] = useState(null)
-
-  function getData() {
-    axios({
-      method: "GET",
-      url:"/home",
-    })
-    .then((response) => {
-      const res = response.data
-      setData(({
-        data: res.data
-      }))
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-        }
-    })}
-
-  useEffect(() => {
-    getData()
-  }, [])
-
-  return (
-    <div className="App">
-        {Data && <div>
-              <p>Profile name: {Data.data}</p>
-            </div>
-        }
-    </div>
-  );
+const App = () => {
+    return (
+        <div className="App">
+            <Nav/>
+            <Router/>
+        </div>
+    );
 }
 
 export default App;
