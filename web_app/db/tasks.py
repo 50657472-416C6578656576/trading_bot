@@ -27,4 +27,6 @@ class TraderTask:
 
     def stop(self):
         self.is_running = False
+        self.trader.stop_trading()
+        del self.thread
         self.thread = None
