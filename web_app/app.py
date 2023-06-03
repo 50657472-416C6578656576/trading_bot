@@ -24,7 +24,7 @@ with app.app_context():
     db.create_all()
 
 
-@app.route("/@me")
+@app.route("/profile")
 def get_current_user():
     user_id = session.get("user_id")
 
@@ -34,7 +34,9 @@ def get_current_user():
     user = User.query.filter_by(id=user_id).first()
     return jsonify({
         "id": user.id,
-        "email": user.email
+        "email": user.email,
+        "api_key": user.api_key,
+        "secret": user.secret
     })
 
 
@@ -69,7 +71,6 @@ def login_user():
     password = request.json["password"]
 
     user = User.query.filter_by(email=email).first()
-
     if user is None:
         return jsonify({"error": "Unauthorized"}), 401
 
@@ -92,14 +93,18 @@ def logout_user():
 
 @app.route('/start_trading', methods=['POST'])
 def start_trading():
+    user_id = session.get("user_id")
+    if user_id is None:
+        return jsonify({"error": "Unauthorized"}), 401
+
     data = request.get_json(force=True)
-    api_key, secret, strategy, symbol, timeframe = \
-        data['api_key'], data['secret'], data['strategy'], data['symbol'], data['timeframe']
+    user = User.query.filter_by(user_id=user_id).first()
+    api_key, secret = user.api_key, user.secret
+    strategy, symbol, timeframe = data['strategy'], data['symbol'], data['timeframe']
     trader = Trader(api_key, secret, strategy, symbol, timeframe)
     thread = Thread(target=trader.start_trading)
-    # thread.daemon = True
+    thread.daemon = True
     thread.start()
     return json.dumps({
         'thread': f'{thread.getName()}',
-        'data': data
     })
