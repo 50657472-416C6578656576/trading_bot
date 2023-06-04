@@ -26,7 +26,13 @@ class Trader:
 
     def get_closed_orders(self):
         return self.client.get_closed_orders()
-
+    
+    def get_balance(self):
+        return self.balance
+    
+    def get_profit(self):
+        return self.profit
+    
     def cancel_all_orders(self):
         orders = self.client.get_open_orders()
         for order in orders:
