@@ -4,9 +4,10 @@ import logging
 import pandas as pd
 from binance.client import Client
 
+
 class Trader:
-    def __init__(self, API_KEY : str, SECRET_KEY : str, symbol : str, timeframe : str, strategy_param : str, balance : float):
-        self.client = Client(API_KEY, SECRET_KEY)
+    def __init__(self, api_key: str, secret_key: str, symbol: str, timeframe: str, strategy_param: str, balance: float):
+        self.client = Client(api_key, secret_key)
         self.strategy = Strategy()
         self.symbol = symbol
         self.timeframe = timeframe
@@ -26,19 +27,19 @@ class Trader:
 
     def get_closed_orders(self):
         return self.client.get_closed_orders()
-    
+
     def get_balance(self):
         return self.balance
-    
+
     def get_profit(self):
         return self.profit
-    
+
     def cancel_all_orders(self):
         orders = self.client.get_open_orders()
         for order in orders:
             self.client.cancel_order(symbol=order['symbol'], orderId=order['orderId'])
 
-    def set_strategy_param(self, param : str):
+    def set_strategy_param(self, param: str):
         self.strategy_param = param
 
     def trade(self):
@@ -90,7 +91,7 @@ class Trader:
         time.sleep(30)  # Wait 30 seconds before checking again
 
     def start_trading(self, predicate: bool = True):
-        while (True):
+        while True:
             try:
                 self.trade()
             except Exception as ex:
