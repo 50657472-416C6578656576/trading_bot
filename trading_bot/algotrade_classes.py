@@ -6,7 +6,15 @@ from binance.client import Client
 
 
 class Trader:
-    def __init__(self, api_key: str, secret_key: str, symbol: str, timeframe: str, strategy_param: str, balance: float):
+    def __init__(
+            self, 
+            api_key: str, 
+            secret_key: str, 
+            symbol: str, 
+            timeframe: str, 
+            strategy_param: str, 
+            balance: float | None = None
+    ):
         self.client = Client(api_key, secret_key)
         self.strategy = Strategy()
         self.symbol = symbol
@@ -14,6 +22,8 @@ class Trader:
         self.strategy_param = strategy_param
         self.balance = balance
         self.profit = 0
+        if balance is None:
+            self.balance = self.get_balance_from_binance()
 
     def set_balance(self, new_balance):
         if new_balance <= self.client.get_asset_balance(asset=self.symbol)['free'] and new_balance > 0:
