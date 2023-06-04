@@ -2,8 +2,8 @@ import pandas as pd
 import talib
 
 class Strategy:
-    def __init__(self, data):
-        self.data = data
+    def __init__(self):
+        self.data = None
         self.strategy_functions = {
             'ema': self.ema,
             'rsi': self.rsi,
@@ -18,6 +18,9 @@ class Strategy:
             'rsi_ema_boll': self.rsi_ema_boll,
             'macd_boll': self.macd_boll
         }
+
+    def update_data(self, data):
+        self.data = data
 
     def ema(self, period):
         """ Exponential Moving Average strategy """
