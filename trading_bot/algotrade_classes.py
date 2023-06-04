@@ -5,29 +5,22 @@ import pandas as pd
 from binance.client import Client
 
 
-# class Trader:
-#     def __init__(self, *args):
-#         self.args = args
-
-#     def start_trading(self):
-#         while True:
-#             print(', '.join(list(map(str, self.args))))
-
 class Trader:
-    def __init__(self, API_KEY : str, SECRET_KEY : str, symbol : str, timeframe : str, strategy_param : str):
+    def __init__(self, API_KEY : str, SECRET_KEY : str, symbol : str, timeframe : str, strategy_param : str, new_balance : float):
         self.client = Client(API_KEY, SECRET_KEY)
         self.strategy = Strategy()
         self.symbol = symbol
         self.timeframe = timeframe
-        self.balance = self.get_balance()
-        self.last_balance = self.balance
         self.strategy_param = strategy_param
-
-    def get_balance(self):
-        account = self.client.get_account()
-        for balance in account['balances']:
-            if balance['asset'] == self.symbol.split('USDT')[0]:
-                return float(balance['free'])
+        self.balance = new_balance
+        
+        
+    def set_balance(self, new_balance):
+        if new_balance <= self.client.get_asset_balance(asset=self.symbol)['free'] and new_balance > 0:
+            self.balance = new_balance
+        else:
+            self.balance = round(self.client.get_asset_balance(asset=self.symbol)['free'] / 2, 5)
+            logging.warning(f'{self.symbol} balance is {self.balance}')
 
     def get_open_orders(self):
         return self.client.get_open_orders()
@@ -59,6 +52,7 @@ class Trader:
         self.strategy.update_data(data)
         # Calculate signal
         signal = self.strategy.run_strategy(strategy_name=self.strategy_param)
+        self.set_balance(self.balance)
 
         # Check for buy and sell
         if signal.iloc[-1] == 1:  # Buy
