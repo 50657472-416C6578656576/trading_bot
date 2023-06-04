@@ -4,6 +4,20 @@ import talib
 class Strategy:
     def __init__(self, data):
         self.data = data
+        self.strategy_functions = {
+            'ema': self.ema,
+            'rsi': self.rsi,
+            'boll': self.boll,
+            'macd': self.macd,
+            'sma': self.sma,
+            'mae': self.mae,
+            'rsi_ema': self.rsi_ema,
+            'rsi_or_ema': self.rsi_or_ema,
+            'rsi_boll': self.rsi_boll,
+            'rsi_or_boll': self.rsi_or_boll,
+            'rsi_ema_boll': self.rsi_ema_boll,
+            'macd_boll': self.macd_boll
+        }
 
     def ema(self, period):
         """ Exponential Moving Average strategy """
@@ -119,3 +133,12 @@ class Strategy:
         self.data.loc[(macdhist > 0) & (self.data['close'] > upperband) & (macdsignal < 0), 'signal'] = 1
         self.data.loc[(macdhist < 0) & (self.data['close'] < lowerband) & (macdsignal > 0), 'signal'] = -1
         return self.data['signal']
+
+    def run_strategy(self, strategy_name, period, *args, **kwargs):
+            try:
+                strategy_func = self.strategy_functions[strategy_name]
+            except KeyError:
+                raise ValueError('Invalid strategy name')
+            
+            signal = strategy_func(period, *args, **kwargs)
+            return signal
