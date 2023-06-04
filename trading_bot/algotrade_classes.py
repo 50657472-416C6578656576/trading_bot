@@ -5,18 +5,18 @@ import pandas as pd
 from binance.client import Client
 
 
-class Trader:
-    def __init__(self, *args):
-        self.args = args
+# class Trader:
+#     def __init__(self, *args):
+#         self.args = args
 
-    def start_trading(self):
-        while True:
-            print(', '.join(list(map(str, self.args))))
+#     def start_trading(self):
+#         while True:
+#             print(', '.join(list(map(str, self.args))))
 
 class Trader:
-    def __init__(self, API_KEY : str, SECRET_KEY : str, strategy : Strategy, symbol : str, timeframe : str, strategy_param : str):
+    def __init__(self, API_KEY : str, SECRET_KEY : str, symbol : str, timeframe : str, strategy_param : str):
         self.client = Client(API_KEY, SECRET_KEY)
-        self.strategy = strategy
+        self.strategy = Strategy()
         self.symbol = symbol
         self.timeframe = timeframe
         self.balance = self.get_balance()
@@ -56,7 +56,7 @@ class Trader:
         data = data.astype(float)
         data['timestamp'] = pd.to_datetime(data['timestamp'], unit='ms')
         data.set_index('timestamp', inplace=True)
-
+        self.strategy.update_data(data)
         # Calculate signal
         signal = self.strategy.run_strategy(strategy_name=self.strategy_param)
 
