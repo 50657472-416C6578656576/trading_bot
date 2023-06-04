@@ -44,9 +44,10 @@ class Trader:
     def get_closed_orders(self):
         return self.client.get_closed_orders()
 
-#     def stop_trading(self):
-#         self.client.cancel_all_orders()
-#         self.logger.info('Trading stopped')
+    def cancel_all_orders(self):
+        orders = self.client.get_open_orders()
+        for order in orders:
+            self.client.cancel_order(symbol=order['symbol'], orderId=order['orderId'])
 
     def trade(self):
         # Get historical klines data
