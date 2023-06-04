@@ -134,11 +134,11 @@ class Strategy:
         self.data.loc[(macdhist < 0) & (self.data['close'] < lowerband) & (macdsignal > 0), 'signal'] = -1
         return self.data['signal']
 
-    def run_strategy(self, strategy_name, period, *args, **kwargs):
+    def run_strategy(self, strategy_name, *args, **kwargs):
             try:
                 strategy_func = self.strategy_functions[strategy_name]
             except KeyError:
                 raise ValueError('Invalid strategy name')
             
-            signal = strategy_func(period, *args, **kwargs)
+            signal = strategy_func(*args, **kwargs)
             return signal
