@@ -14,29 +14,20 @@ class Trader:
             print(', '.join(list(map(str, self.args))))
 
 class Trader:
-    def __init__(self, API_KEY, SECRET_KEY, strategy, symbol, timeframe):
+    def __init__(self, API_KEY : str, SECRET_KEY : str, strategy : Strategy, symbol : str, timeframe : str, strategy_param : str):
         self.client = Client(API_KEY, SECRET_KEY)
         self.strategy = strategy
         self.symbol = symbol
         self.timeframe = timeframe
         self.balance = self.get_balance()
         self.last_balance = self.balance
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        file_handler = logging.FileHandler('transaction.log')
-        file_handler.setLevel(logging.DEBUG)
-        file_handler.setFormatter(formatter)
-        self.logger.addHandler(file_handler)
+        self.strategy_param = strategy_param
 
     def get_balance(self):
         account = self.client.get_account()
         for balance in account['balances']:
             if balance['asset'] == self.symbol.split('USDT')[0]:
                 return float(balance['free'])
-
-    def get_logs(self):
-        return self.client.get_logs()
 
     def get_open_orders(self):
         return self.client.get_open_orders()
@@ -48,6 +39,9 @@ class Trader:
         orders = self.client.get_open_orders()
         for order in orders:
             self.client.cancel_order(symbol=order['symbol'], orderId=order['orderId'])
+
+    def set_strategy_param(self, param : str):
+        self.strategy_param = param
 
     def trade(self):
         # Get historical klines data
@@ -64,32 +58,7 @@ class Trader:
         data.set_index('timestamp', inplace=True)
 
         # Calculate signal
-        if self.strategy == 'ema':
-            signal = Strategy(data).ema(period=20)
-        elif self.strategy == 'rsi':
-            signal = Strategy(data).rsi(period=14)
-        elif self.strategy == 'boll':
-            signal = Strategy(data).boll(period=20)
-        elif self.strategy == 'rsi_or_boll':
-            signal = Strategy(data).rsi_or_boll(period=14)
-        elif self.strategy == 'macd':
-            signal = Strategy(data).macd(period=20)
-        elif self.strategy == 'macd_boll':
-            signal = Strategy(data).macd_boll(period=20, width=20)
-        elif self.strategy == 'ema_boll':
-            signal = Strategy(data).ema_boll(period=20, width=20)
-        elif self.strategy == 'sma_boll':
-            signal = Strategy(data).sma_boll(period=20, width=20)
-        elif self.strategy == 'rsi_ema_boll':
-            signal = Strategy(data).rsi_ema_boll(period=14, ema_period=20, boll_period=20)
-        elif self.strategy == 'sma':
-            signal = Strategy(data).sma(period=20)
-        elif self.strategy == 'rsi_or_sma':
-            signal = Strategy(data).rsi_or_sma(period=14)
-        elif self.strategy == 'boll_or_sma':
-            signal = Strategy(data).boll_or_sma(period=20)
-        else:
-            raise ValueError('Invalid strategy!')
+        signal = self.strategy.run_strategy(strategy_name=self.strategy_param)
 
         # Check for buy and sell
         if signal.iloc[-1] == 1:  # Buy
@@ -115,14 +84,12 @@ class Trader:
                 )
                 self.last_balance = self.balance
                 self.balance = 0
-                self.logger.info(f'Sell {self.last_balance} {self.symbol} at {order.get("price")}')
-
+                
         # Print current balance
-        self.logger.debug(f'Current balance of {self.symbol}: {self.balance}')
         time.sleep(30)  # Wait 30 seconds before checking again
 
     def start_trading(self, predicate: bool = True):
-        while (predicate): # predicate such as True. Example: if balance < 1000 USBT
+        while (True):
             try:
                 self.trade()
             except Exception as ex:
