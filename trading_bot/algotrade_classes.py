@@ -25,6 +25,9 @@ class Trader:
     def get_open_orders(self):
         return self.client.get_open_orders()
 
+    def get_balance_from_binance(self):
+        return self.client.get_asset_balance(asset=self.symbol)
+
     def get_closed_orders(self):
         return self.client.get_closed_orders()
 
