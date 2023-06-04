@@ -5,7 +5,15 @@ import pandas as pd
 from binance.client import Client
 
 class Trader:
-    def __init__(self, API_KEY : str, SECRET_KEY : str, symbol : str, timeframe : str, strategy_param : str, balance : float):
+    def __init__(
+            self,
+            API_KEY: str,
+            SECRET_KEY: str,
+            symbol: str,
+            timeframe: str,
+            strategy_param: str,
+            balance: float | None = None
+    ):
         self.client = Client(API_KEY, SECRET_KEY)
         self.strategy = Strategy()
         self.symbol = symbol
@@ -14,8 +22,11 @@ class Trader:
         self.balance = balance
         self.profit = 0
 
+        if balance is None:
+            ...
+
     def set_balance(self, new_balance):
-        if new_balance <= self.client.get_asset_balance(asset=self.symbol)['free'] and new_balance > 0:
+        if self.client.get_asset_balance(asset=self.symbol)['free'] >= new_balance > 0:
             self.balance = new_balance
         else:
             self.balance = round(self.client.get_asset_balance(asset=self.symbol)['free'] / 2, 5)
