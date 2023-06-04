@@ -8,11 +8,11 @@ if __name__ == '__main__':
     parser.add_argument('--strategy', type=str, help='Trading strategy (ema, rsi, boll)')
     parser.add_argument('--symbol', type=str, help='Symbol to trade (e.g. BTCUSDT)')
     parser.add_argument('--timeframe', type=str, default='1m', help='Kline timeframe (default: 1m)')
+    parser.add_argument('--strategy_papam', type=str, default='boll', help='Model of trading (default: boll)')
     args = parser.parse_args()
 
     # Initialize trading objects
-    strategy = Strategy()
-    trader = Trader(api_key=args.api_key, secret_key=args.secret_key, strategy=args.strategy, symbol=args.symbol, timeframe=args.timeframe)
+    trader = Trader(api_key=args.api_key, secret_key=args.secret_key, symbol=args.symbol, timeframe=args.timeframe, strategy_param=args.strategy_param)
 
     # Start trading
     trader.start_trading()
