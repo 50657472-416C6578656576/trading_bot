@@ -1,7 +1,7 @@
 import './Profile.sass';
 import React, {useEffect, useState} from 'react';
-// import {Navigate} from 'react-router-dom';
 import httpClient from "../../httpClient";
+import authorized from "../../auth";
 
 const Profile = () => {
     const [email, setEmail] = useState("");
@@ -10,8 +10,6 @@ const Profile = () => {
     const [secret, setSecret] = useState("");
 
     const signUpUser = async () => {
-        console.log(email, password);
-
         try {
             const resp = await httpClient.post("/register", {
                 email,
@@ -26,23 +24,21 @@ const Profile = () => {
         container.classList.remove("right-panel-active");
     };
     const logInUser = async () => {
-        console.log(email, password);
-
         try {
             const resp = await httpClient.post("/login", {
                 email,
                 password
             });
-
-            window.location.href = "/profile";
+            window.location.href = "/settings";
         } catch (error) {
             alert("Invalid credentials");
         }
     };
-    useEffect(() => {
-        try {
-            const resp = httpClient.get("/profile");
-        } catch (error) {}
+
+    useEffect(async () => {
+        if (await authorized()) {
+            window.location.href = "/settings";
+        }
 
         const signUpButton = document.getElementById('signUp');
         const signInButton = document.getElementById('signIn');
