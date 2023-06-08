@@ -12,7 +12,7 @@ const Settings = () => {
 
     const signOut = async () => {
         await httpClient.post("/logout");
-        window.location.href('/profile');
+        window.location.href = "/profile";
     };
 
     useEffect(async () => {
