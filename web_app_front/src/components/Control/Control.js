@@ -11,14 +11,20 @@ const Control = () => {
     const [timeframe, setTimeframe] = useState("");
 
     const startTrading = async () => {
-        await httpClient.post("/start_trading", {
-            strategy,
-            symbol,
-            timeframe
-        });
+        try {
+            const response = await httpClient.post("/start_trading", {
+                strategy,
+                symbol,
+                timeframe
+            });
+            alert("Trading started");
+        } catch {
+            alert("Something went wrong")
+        }
     };
     const stopTrading = async () => {
         await httpClient.post("/stop_trading");
+        alert("Trading stopped");
     };
 
     useEffect(async () => {
