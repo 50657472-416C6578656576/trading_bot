@@ -20,7 +20,6 @@ const Settings = () => {
         if (response === null) {
             window.location.href = "/profile";
         }
-        console.log(response.data);
         setProfileData(response.data);
     }, []);
     return (
