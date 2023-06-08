@@ -34,9 +34,9 @@
    $ python3 web_app
    ```
 3. Запуск фронтенда (веб-клиента) из директории `web_app_fron/`:
-```bash
-$ npm install && npm start
-```
+   ```bash
+   $ npm install && npm start
+   ```
 ### Установка ta-lib (если возникают проблемы)
 1. Перейти в директорию [ta-lib](./ta-lib)
 2. Выполнить следующие действия:
