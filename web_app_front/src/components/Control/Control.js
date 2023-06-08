@@ -6,9 +6,15 @@ import httpClient from "../../httpClient";
 const Control = () => {
     const [current_balance, setCurrentBalance] = useState("Unknown");
 
+    const [strategy, setStrategy] = useState("");
+    const [symbol, setSymbol] = useState("");
+    const [timeframe, setTimeframe] = useState("");
+
     const startTrading = async () => {
         await httpClient.post("/start_trading", {
-
+            strategy,
+            symbol,
+            timeframe
         });
     };
     const stopTrading = async () => {
@@ -29,9 +35,42 @@ const Control = () => {
         <div className="Control">
             <div className="control-wrapper">
                 <div className="text-block">
-                    <h1>Current balance: {current_balance}</h1>
-                    <button type="button" onClick={() => startTrading()}>start trading</button>
+                    <form>
+                        <h1>Current balance: {current_balance}</h1>
+                        <div>
+                            <input
+                                type="text"
+                                value={strategy}
+                                onChange={(e) => setStrategy(e.target.value)}
+                                id=""
+                                placeholder="strategy"
+                            />
+                        </div>
+                        <div>
+                            <input
+                                type="text"
+                                value={symbol}
+                                onChange={(e) => setSymbol(e.target.value)}
+                                id=""
+                                placeholder="symbol"
+                            />
+                        </div>
+                        <div>
+                            <input
+                                type="text"
+                                value={timeframe}
+                                onChange={(e) => setTimeframe(e.target.value)}
+                                id=""
+                                placeholder="timeframe"
+                            />
+                        </div>
+                        <br/>
+                        <button type="button" onClick={() => startTrading()}>start trading</button>
+                    </form>
+                    <br/>
+                    <form>
                     <button type="button" onClick={() => stopTrading()}>stop trading</button>
+                    </form>
                 </div>
                 <div className="TreeDeco">
                     <img id='Atree' height={180} src={Atree}/>
