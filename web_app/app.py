@@ -130,5 +130,5 @@ def get_balance():
     user = User.query.filter_by(id=user_id).first()
     api_key, secret = user.api_key, user.secret
     symbol = request.args.get('symbol')
-    balance = Trader(api_key, secret, None, symbol, None).get_balance()
+    balance = Trader(api_key, secret).get_balance()
     return jsonify({'balance': f'{balance}'})
