@@ -97,7 +97,8 @@ def start_trading():
     user = User.query.filter_by(id=user_id).first()
     api_key, secret = user.api_key, user.secret
     strategy, symbol, timeframe = data['strategy'], data['symbol'], data['timeframe']
-    task = TraderTask(api_key, secret, strategy, symbol, timeframe)
+    trading_balance = data.get('amount')
+    task = TraderTask(api_key, secret, strategy, symbol, timeframe, trading_balance)
     task.run()
     return jsonify({
         'thread': f'{task.thread.name}',

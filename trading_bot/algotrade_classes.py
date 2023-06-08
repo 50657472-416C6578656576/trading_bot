@@ -25,9 +25,6 @@ class Trader:
         if balance is None:
             self.balance = self.get_balance_from_binance()
 
-        if balance is None:
-            ...
-
     def set_balance(self, new_balance):
         if self.client.get_asset_balance(asset=self.symbol)['free'] >= new_balance > 0:
             self.balance = new_balance
