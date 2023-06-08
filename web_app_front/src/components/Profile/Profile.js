@@ -1,6 +1,6 @@
 import './Profile.sass';
 import React, {useEffect, useState} from 'react';
-import {Navigate} from 'react-router-dom';
+// import {Navigate} from 'react-router-dom';
 import httpClient from "../../httpClient";
 
 const Profile = () => {
@@ -19,10 +19,11 @@ const Profile = () => {
                 api_key,
                 secret
             });
-            window.location.href = "/profile";
         } catch (error) {
             alert("Invalid credentials");
         }
+        const container = document.getElementById('container');
+        container.classList.remove("right-panel-active");
     };
     const logInUser = async () => {
         console.log(email, password);
@@ -58,7 +59,7 @@ const Profile = () => {
     return (
         <div className="container-form-wrapper">
             <div className="container" id="container">
-                <div className="form-container sign-up-container">
+                <div className="form-container sign-up-container text-lg">
                     <form>
                         <h1>Sign up</h1>
                         <div>

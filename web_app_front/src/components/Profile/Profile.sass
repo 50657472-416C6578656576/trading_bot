@@ -4,16 +4,14 @@
 	box-sizing: border-box
 
 .container-form-wrapper
-	background: $background-color
 	display: flex
-	justify-content: center
 	align-items: center
 	flex-direction: column
-	height: 100vh
+	padding-top: 25vh
 
 
 h1
-	font-size: 30px
+	font-size: 3rem
 	font-weight: bold
 	margin: 0
 
@@ -22,20 +20,15 @@ h2
 
 
 p
-	font-size: 20px
+	font-size: 2rem
 	font-weight: 100
 	line-height: 20px
 	letter-spacing: 0.5px
 	margin: 20px 0 30px
 
 
-span
-	font-size: 18px
-
-
 a
 	color: #333
-	font-size: 14px
 	text-decoration: none
 	margin: 15px 0
 
@@ -45,7 +38,7 @@ button
 	border: 1px solid $accent-color
 	background-color: $accent-color
 	color: $background-color
-	font-size: 18px
+	font-size: 2rem
 	font-weight: bold
 	padding: 12px 45px
 	letter-spacing: 1px
@@ -73,7 +66,7 @@ form
 	text-align: center
 
 input
-	font-size: 15px
+	font-size: 1.5rem
 	background-color: #eee
 	border: none
 	padding: 12px 15px
@@ -129,7 +122,7 @@ input
 
 	50%, 100%
 		opacity: 1
-		z-index: 5
+		z-index: 3
 
 
 
@@ -141,7 +134,7 @@ input
 	height: 100%
 	overflow: hidden
 	transition: transform 0.6s ease-in-out
-	z-index: 100
+	z-index: 4
 
 
 .container.right-panel-active .overlay-container
@@ -218,13 +211,13 @@ input
 footer
 	background-color: #222
 	color: #fff
-	font-size: 14px
+	//font-size: 14px
 	bottom: 0
 	position: fixed
 	left: 0
 	right: 0
 	text-align: center
-	z-index: 999
+	z-index: 5
 
 
 footer p

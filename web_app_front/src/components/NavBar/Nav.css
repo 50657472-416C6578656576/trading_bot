@@ -4,7 +4,7 @@
   top: 1%;
   right: 1%;
   transform: translate(-50%, 50%);
-  z-index: 5;
+  z-index: 902;
 }
 .menu-btn .btn-burger {
   height: 8vh;
@@ -24,7 +24,7 @@
 }
 
 .logo {
-  z-index: 2;
+  z-index: 900;
   position: fixed;
   top: 1%;
   left: 23%;
@@ -33,7 +33,7 @@
 }
 
 .nav-bar {
-  z-index: 4;
+  z-index: 901;
   position: fixed;
   top: 0px;
   background-color: #CB4038;
@@ -63,7 +63,6 @@
   .nav-links a {
     font-size: 2.4rem !important;
   }
-
   .logo {
     left: 21%;
   }
@@ -84,7 +83,6 @@
   .mobile-nav-bar .mobile-nav-links {
     flex-direction: column;
   }
-
   .menu-btn {
     display: block;
   }
@@ -102,7 +100,6 @@
   .mobile-nav-bar .mobile-nav-links {
     flex-direction: column;
   }
-
   .menu-btn {
     display: block;
   }
