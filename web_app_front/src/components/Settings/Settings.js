@@ -1,8 +1,6 @@
 import './Settings.sass';
 import React, { useEffect, useState } from 'react';
-import authorized from "../../auth";
 import getProfileInfo from "../../getProfileInfo";
-import MainPageIllustration from "../Home/MainPageIllustration/MainPageIllustration";
 import Atree from "../../static/Atree.svg";
 import httpClient from "../../httpClient";
 

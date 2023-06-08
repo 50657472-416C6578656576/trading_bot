@@ -1,1 +1,70 @@
+.control-wrapper {
+  position: absolute;
+  top: 0px;
+  z-index: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+.text-block {
+  display: inline;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+}
+.text-block h1 {
+  color: #281E1F;
+  font: 4rem "El Messiri" bold;
+  word-wrap: yes;
+}
+.text-block p {
+  color: #281E1F;
+  font: 2.4rem "El Messiri";
+  word-wrap: yes;
+}
+
+.TreeDeco {
+  display: inline-block;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 70%;
+  left: 70%;
+}
+
+@media (max-width: 1080px), (orientation: portrait) {
+  .text-block p {
+    font-size: 1.8rem;
+  }
+  img {
+    height: 120px;
+  }
+}
+button {
+  border-radius: 20px;
+  border: 1px solid #CB4038;
+  background-color: #CB4038;
+  color: #FDF8E0;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: lowercase;
+  transition: transform 80ms ease-in;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
+}
+
+button.ghost {
+  background-color: transparent;
+  border-color: #FDF8E0;
+}
+
 /*# sourceMappingURL=Control.css.map */
